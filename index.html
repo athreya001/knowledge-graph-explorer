@@ -560,6 +560,29 @@
       modal.classList.add('flex');
     }
 
+    async function copyModalContent() {
+      const content = document.getElementById('modalContent').textContent;
+      try {
+        await navigator.clipboard.writeText(content);
+        
+        // Visual feedback on the button
+        const btn = document.getElementById('copyBtn');
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        btn.classList.add('text-green-600', 'dark:text-green-400');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove('text-green-600', 'dark:text-green-400');
+        }, 2000);
+        
+        showToast('JSON copied to clipboard', 'success');
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        showToast('Failed to copy to clipboard', 'error');
+      }
+    }
+
     function closeModal() {
       const modal = document.getElementById('jsonModal');
       modal.classList.add('hidden');
