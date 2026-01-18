@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1130474719.svg)](https://doi.org/10.5281/zenodo.18286233)
+
 # Knowledge Graph Explorer 🧠
 
 A lightweight, client-side explorer for the **Google Knowledge Graph Search API**. Search entities, view relevance scores, and inspect raw JSON responses directly in your browser.
