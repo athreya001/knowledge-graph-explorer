@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/1130474719.svg)](https://doi.org/10.5281/zenodo.18286233)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18286233.svg)](https://doi.org/10.5281/zenodo.18286233)
 
 # Knowledge Graph Explorer 🧠
 
