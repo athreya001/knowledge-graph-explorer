@@ -4,6 +4,8 @@
 
 A lightweight, client-side explorer for the **Google Knowledge Graph Search API**. Search entities, view relevance scores, and inspect raw JSON responses directly in your browser.
 
+If you do not have your own API key, you can use this one: AIzaSyBVw-I5EtnusS6hy0ruPO-ovgYJf0E1edY
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 🚀 Live Demo
