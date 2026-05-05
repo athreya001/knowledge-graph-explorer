@@ -9,14 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            slate: { 850: '#1e293b', 900: '#0f172a' }
-          }
-        }
-      }
+      darkMode: 'class'
     }
   </script>
   
@@ -79,7 +72,7 @@
       </div>
       
       <div class="flex items-center gap-3">
-        <a href="https://github.com" target="_blank" class="p-2 text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
+        <a href="https://github.com/athreya001/knowledge-graph-explorer" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
           <i class="fa-brands fa-github text-xl"></i>
         </a>
         <button id="themeToggle" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -94,28 +87,16 @@
     
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8 transition-colors duration-300">
       
-      <div id="apiKeyNote" class="hidden mb-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 text-sm text-amber-800 dark:text-amber-200 flex items-start gap-3">
-        <i class="fa-solid fa-shield-cat mt-0.5"></i>
+      <div id="apiKeyNote" class="hidden mb-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2 text-xs text-amber-800 dark:text-amber-200 flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved"></i>
         <div class="flex-1">
-          <strong>Security Note:</strong> Your API Key is stored locally in your browser (`localStorage`). It is never sent to any server other than Google's API.
+          <strong id="apiKeyNoteTitle">Demo API Key Active:</strong>
+          <span id="apiKeyNoteText">Public demo key is used automatically.</span>
         </div>
         <button onclick="document.getElementById('apiKeyNote').classList.add('hidden')" class="hover:text-amber-900 dark:hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div class="grid gap-5 md:grid-cols-[1fr_2fr_auto]">
-        <div class="relative group">
-          <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">API Key</label>
-          <div class="relative">
-            <i class="fa-solid fa-key absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"></i>
-            <input type="password" id="apiKey"
-              class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm font-mono dark:text-white"
-              placeholder="Paste Google API Key">
-            <button onclick="toggleKeyVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-              <i class="fa-solid fa-eye" id="eyeIcon"></i>
-            </button>
-          </div>
-        </div>
-
+      <div class="grid gap-5 md:grid-cols-[1fr_auto]">
         <div class="relative">
           <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Search Query</label>
           <div class="relative">
@@ -140,7 +121,7 @@
       </div>
 
       <div id="recentSearchesContainer" class="hidden mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide" id="recentSearchesList"></div>
+        <div class="flex items-center gap-2 overflow-x-auto pb-2" id="recentSearchesList"></div>
       </div>
 
       <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
@@ -152,11 +133,11 @@
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 animate-fade-in-up">
             <div>
               <label class="block text-[10px] uppercase text-slate-400 mb-1">Limit</label>
-              <input type="number" id="limit" value="10" min="1" max="50" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+              <input type="number" id="limit" min="1" max="50" placeholder="Optional" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
             </div>
             <div>
-              <label class="block text-[10px] uppercase text-slate-400 mb-1">Language</label>
-              <input type="text" id="languages" value="en" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+              <label class="block text-[10px] uppercase text-slate-400 mb-1">Languages (Comma separated)</label>
+              <input type="text" id="languages" placeholder="e.g. en, fr, ja" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
             </div>
             <div class="col-span-2 md:col-span-2">
               <label class="block text-[10px] uppercase text-slate-400 mb-1">Types (Comma separated)</label>
@@ -170,17 +151,15 @@
     <div id="resultsWrapper">
       
       <div id="skeletonLoader" class="hidden grid-cols-1 gap-6">
-        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-0 overflow-hidden flex flex-col md:flex-row h-48">
-          <div class="w-full md:w-48 bg-slate-200 dark:bg-slate-700 skeleton h-full"></div>
-          <div class="p-6 flex-1 space-y-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div class="p-6 space-y-4">
             <div class="h-6 w-1/3 bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
             <div class="h-4 w-1/4 bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
             <div class="h-16 w-full bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
           </div>
         </div>
-        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-0 overflow-hidden flex flex-col md:flex-row h-48">
-          <div class="w-full md:w-48 bg-slate-200 dark:bg-slate-700 skeleton h-full"></div>
-          <div class="p-6 flex-1 space-y-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div class="p-6 space-y-4">
             <div class="h-6 w-1/3 bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
             <div class="h-4 w-1/4 bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
             <div class="h-16 w-full bg-slate-200 dark:bg-slate-700 rounded skeleton"></div>
@@ -197,7 +176,7 @@
 
       <div id="resultsContainer" class="grid grid-cols-1 gap-6 pb-20">
         <div class="text-center py-20 opacity-50">
-          <i class="fa-brands fa-google text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
+          <i class="fa-solid fa-diagram-project text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
           <p class="text-slate-400 dark:text-slate-500 text-lg">Enter a query to start exploring.</p>
         </div>
       </div>
@@ -236,8 +215,44 @@
 
   <script>
     // --- State Management ---
+    // Public demo key: keep API-restricted and quota-limited in Google Cloud.
+    const DEMO_API_KEY = 'AIzaSyBVw-I5EtnusS6hy0ruPO-ovgYJf0E1edY';
+    const KG_TYPE_ALIASES = {
+      administrativearea: 'AdministrativeArea',
+      amusementpark: 'AmusementPark',
+      book: 'Book',
+      city: 'City',
+      civicstructure: 'CivicStructure',
+      corporation: 'Corporation',
+      country: 'Country',
+      creativework: 'CreativeWork',
+      educationalorganization: 'EducationalOrganization',
+      event: 'Event',
+      eventvenue: 'EventVenue',
+      governmentorganization: 'GovernmentOrganization',
+      landmarksorhistoricalbuildings: 'LandmarksOrHistoricalBuildings',
+      localbusiness: 'LocalBusiness',
+      movie: 'Movie',
+      musicalbum: 'MusicAlbum',
+      musicgroup: 'MusicGroup',
+      musicrecording: 'MusicRecording',
+      musicvenue: 'MusicVenue',
+      organization: 'Organization',
+      periodical: 'Periodical',
+      person: 'Person',
+      place: 'Place',
+      product: 'Product',
+      sportsactivitylocation: 'SportsActivityLocation',
+      sportsteam: 'SportsTeam',
+      stadiumorarena: 'StadiumOrArena',
+      thing: 'Thing',
+      touristattraction: 'TouristAttraction',
+      tvseries: 'TVSeries'
+    };
     window.fullResponseData = null;
-    let searchTimeout = null;
+    let activeSearchRequestId = 0;
+    const SEARCH_HISTORY_KEY = 'kg_search_history';
+    const LEGACY_API_KEY_STORAGE_KEY = 'kg_api_key';
 
     // --- Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -253,8 +268,8 @@
         toggleClearBtn();
         // Give time for UI to settle before auto-searching
         setTimeout(() => {
-            if(document.getElementById('apiKey').value) initiateSearch();
-            else showToast('Enter API Key to run shared search', 'info');
+            if(DEMO_API_KEY) initiateSearch();
+            else showToast('Demo API key is not configured', 'error');
         }, 500);
       }
     });
@@ -299,58 +314,50 @@
       window.history.pushState({}, '', url);
     }
 
-    function toggleKeyVisibility() {
-        const input = document.getElementById('apiKey');
-        const icon = document.getElementById('eyeIcon');
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    }
-
-    // --- LocalStorage Logic ---
     function loadSettings() {
-      const savedKey = localStorage.getItem('kg_api_key');
-      if (savedKey) {
-        document.getElementById('apiKey').value = savedKey;
+      const note = document.getElementById('apiKeyNote');
+      const noteTitle = document.getElementById('apiKeyNoteTitle');
+      const noteText = document.getElementById('apiKeyNoteText');
+      safeRemoveStorageItem(LEGACY_API_KEY_STORAGE_KEY);
+
+      if (DEMO_API_KEY) {
+        noteTitle.textContent = 'Demo API Key Active:';
+        noteText.textContent = 'Public demo key is used automatically.';
       } else {
-        document.getElementById('apiKeyNote').classList.remove('hidden');
+        noteTitle.textContent = 'Demo API Key Missing:';
+        noteText.textContent = 'Add a demo key in the app source before searching.';
       }
+      note.classList.remove('hidden');
     }
 
     function addToHistory(query) {
       if(!query) return;
-      let history = JSON.parse(localStorage.getItem('kg_search_history') || '[]');
+      let history = getSearchHistory();
       history = history.filter(q => q.toLowerCase() !== query.toLowerCase());
       history.unshift(query);
       if (history.length > 8) history = history.slice(0, 8);
-      localStorage.setItem('kg_search_history', JSON.stringify(history));
+      saveSearchHistory(history);
       renderHistory();
     }
 
     function renderHistory() {
-      const history = JSON.parse(localStorage.getItem('kg_search_history') || '[]');
+      const history = getSearchHistory();
       const list = document.getElementById('recentSearchesList');
       const container = document.getElementById('recentSearchesContainer');
       
+      list.replaceChildren();
       if (history.length === 0) {
         container.classList.add('hidden');
         return;
       }
       container.classList.remove('hidden');
-      list.innerHTML = '';
       
       // Add "Clear" button first
       const clearBtn = document.createElement('button');
       clearBtn.className = "text-xs font-semibold text-red-400 hover:text-red-600 px-3 py-1.5 transition-colors whitespace-nowrap";
       clearBtn.innerHTML = '<i class="fa-solid fa-trash-can mr-1"></i> Clear';
       clearBtn.onclick = () => {
-          localStorage.removeItem('kg_search_history');
+          safeRemoveStorageItem(SEARCH_HISTORY_KEY);
           renderHistory();
       };
       list.appendChild(clearBtn);
@@ -371,25 +378,21 @@
     // --- Core Search Logic ---
     async function initiateSearch() {
       const query = document.getElementById('searchQuery').value.trim();
-      const apiKey = document.getElementById('apiKey').value.trim();
-      const limit = document.getElementById('limit').value;
-      const languages = document.getElementById('languages').value;
-      const types = document.getElementById('types').value.trim();
+      const limit = document.getElementById('limit').value.trim();
+      const languages = splitFilterValues(document.getElementById('languages').value, normalizeLanguageFilter);
+      const types = splitFilterValues(document.getElementById('types').value, normalizeTypeFilter);
 
       if (!query) {
         showToast('Please enter a search query', 'error');
         return;
       }
-      if (!apiKey) {
-        showToast('API Key is missing', 'error');
-        document.getElementById('apiKey').focus();
-        document.getElementById('apiKey').parentElement.classList.add('ring-2', 'ring-red-500', 'rounded-xl');
-        setTimeout(() => document.getElementById('apiKey').parentElement.classList.remove('ring-2', 'ring-red-500'), 2000);
+      if (!DEMO_API_KEY) {
+        showToast('Demo API key is not configured', 'error');
         return;
       }
 
-      // Save Key
-      localStorage.setItem('kg_api_key', apiKey);
+      const requestId = ++activeSearchRequestId;
+      safeRemoveStorageItem(LEGACY_API_KEY_STORAGE_KEY);
       addToHistory(query);
 
       // Update URL without reload
@@ -398,7 +401,7 @@
       window.history.pushState({}, '', url);
 
       // UI States
-      document.getElementById('resultsContainer').innerHTML = '';
+      document.getElementById('resultsContainer').replaceChildren();
       document.getElementById('skeletonLoader').classList.remove('hidden');
       document.getElementById('skeletonLoader').classList.add('grid');
       document.getElementById('resultControls').classList.add('hidden');
@@ -411,41 +414,42 @@
       const idRegex = /^(kg:)?(\/[mg]\/[a-zA-Z0-9_\-]+)$/i;
       const idMatch = query.match(idRegex);
 
-      let apiUrl = `https://kgsearch.googleapis.com/v1/entities:search?key=${apiKey}&limit=${limit}&indent=true`;
+      const apiUrl = new URL('https://kgsearch.googleapis.com/v1/entities:search');
+      apiUrl.searchParams.set('key', DEMO_API_KEY);
+      apiUrl.searchParams.set('indent', 'true');
+      if (limit) apiUrl.searchParams.set('limit', limit);
       
       if (idMatch) {
         // It is an ID! Use 'ids' parameter and strip 'kg:' if present
         const cleanId = idMatch[2]; // Group 2 is the /m/... part
-        apiUrl += `&ids=${encodeURIComponent(cleanId)}`;
+        apiUrl.searchParams.set('ids', cleanId);
         showToast('Searching by Entity ID...', 'info');
       } else {
         // Standard text search
-        apiUrl += `&query=${encodeURIComponent(query)}`;
+        apiUrl.searchParams.set('query', query);
       }
       // --- SMART ID DETECTION END ---
 
-      if (languages) apiUrl += `&languages=${encodeURIComponent(languages)}`;
-      if (types) apiUrl += `&types=${encodeURIComponent(types)}`;
+      languages.forEach(language => apiUrl.searchParams.append('languages', language));
+      types.forEach(type => apiUrl.searchParams.append('types', type));
 
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl.toString());
         const data = await response.json();
 
+        if (requestId !== activeSearchRequestId) return;
         if (!response.ok) throw new Error(data.error ? data.error.message : 'Network response was not ok');
         
         window.fullResponseData = data;
         renderResults(data);
       } catch (error) {
+        if (requestId !== activeSearchRequestId) return;
         console.error(error);
-        showToast(error.message, 'error');
-        document.getElementById('resultsContainer').innerHTML = `
-           <div class="text-center py-12 bg-red-50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/30">
-            <i class="fa-solid fa-triangle-exclamation text-3xl text-red-500 mb-3"></i>
-            <p class="text-red-600 dark:text-red-400 font-medium">Search Failed</p>
-            <p class="text-red-400 dark:text-red-500/70 text-sm mt-1">${error.message}</p>
-          </div>
-        `;
+        const message = error.message || 'Search failed';
+        showToast(message, 'error');
+        renderError(message);
       } finally {
+        if (requestId !== activeSearchRequestId) return;
         document.getElementById('skeletonLoader').classList.add('hidden');
         document.getElementById('skeletonLoader').classList.remove('grid');
         document.getElementById('searchBtn').disabled = false;
@@ -455,14 +459,11 @@
 
     function renderResults(data) {
       const container = document.getElementById('resultsContainer');
-      const items = data.itemListElement || [];
+      const items = Array.isArray(data.itemListElement) ? data.itemListElement : [];
+      container.replaceChildren();
 
       if (items.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
-            <p class="text-slate-500">No results found for this query.</p>
-          </div>
-        `;
+        container.appendChild(createEmptyState('No results found for this query.'));
         return;
       }
 
@@ -471,71 +472,37 @@
       document.getElementById('countHeader').innerText = `Found ${items.length} entities`;
 
       items.forEach((item, index) => {
-        const entity = item.result;
-        const score = item.resultScore ? Math.round(item.resultScore) : 0;
+        const entity = item.result || {};
+        const scoreValue = Number(item.resultScore);
+        const score = Number.isFinite(scoreValue) ? Math.round(scoreValue) : 0;
         
         // Data Extraction
-        const name = entity.name || 'Unknown';
-        const description = entity.description || 'No description';
-        const detailedDesc = entity.detailedDescription ? entity.detailedDescription.articleBody : '';
-        const wikiUrl = entity.detailedDescription ? entity.detailedDescription.url : entity.url;
-        const imageUrl = entity.image ? entity.image.contentUrl : null;
-        const id = entity['@id'] || '';
+        const name = asDisplayText(entity.name, 'Unknown');
+        const description = asDisplayText(entity.description, 'No description');
+        const detailedDesc = asDisplayText(entity.detailedDescription ? entity.detailedDescription.articleBody : '', '');
+        const officialUrl = getSafeHttpsUrl(entity.url);
+        const sourceUrl = getSafeHttpsUrl(entity.detailedDescription ? entity.detailedDescription.url : '');
+        const sourceLicenseUrl = getSafeHttpsUrl(entity.detailedDescription ? entity.detailedDescription.license : '');
+        const imageLicenseUrl = getSafeHttpsUrl(entity.image ? entity.image.license : '');
+        const imageUrl = getSafeHttpsUrl(entity.image ? entity.image.contentUrl : '');
+        const id = asDisplayText(entity['@id'], '');
         const types = entity['@type'] || [];
         const typeArray = Array.isArray(types) ? types : [types];
 
-        // --- Card HTML ---
-        const card = document.createElement('div');
-        card.className = "bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg dark:hover:shadow-slate-900/50 transition-all duration-300 animate-fade-in-up flex flex-col md:flex-row group";
-        card.style.animationDelay = `${index * 50}ms`;
-
-        // Image Section
-        const imgSection = imageUrl 
-            ? `<div class="w-full md:w-48 h-48 md:h-auto bg-slate-100 dark:bg-slate-900 relative overflow-hidden flex-shrink-0">
-                 <img src="${imageUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600\\'><i class=\\'fa-regular fa-image text-2xl\\'></i></div>'">
-               </div>`
-            : `<div class="w-full md:w-48 h-24 md:h-auto bg-slate-50 dark:bg-slate-900/50 flex-shrink-0 flex items-center justify-center text-slate-300 dark:text-slate-700 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-700">
-                 <i class="fa-regular fa-image text-3xl opacity-50"></i>
-               </div>`;
-
-        // Tags HTML
-        const tagsHtml = typeArray.map(t => 
-            `<button onclick="triggerSearch('${t}')" class="text-[10px] uppercase font-bold tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded border border-blue-100 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors">${t}</button>`
-        ).join('');
-
-        // Content
-        card.innerHTML = `
-          ${imgSection}
-          <div class="flex-1 p-5 flex flex-col relative">
-            
-            <div class="flex justify-between items-start">
-               <div>
-                  <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-1 leading-tight">${name}</h2>
-                  <button onclick="triggerSearch('${id}')" class="text-xs font-mono text-slate-400 dark:text-slate-500 hover:text-blue-500 dark:hover:text-blue-400 transition-colors mb-2 block text-left" title="Click to search ID">
-                    <i class="fa-solid fa-fingerprint mr-1"></i>${id}
-                  </button>
-               </div>
-               <div class="bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 text-xs font-bold px-2 py-1 rounded flex items-center gap-1" title="Relevance Score">
-                 <i class="fa-solid fa-star text-amber-400 text-[10px]"></i> ${score}
-               </div>
-            </div>
-
-            <div class="flex flex-wrap gap-2 mb-3">
-              ${tagsHtml}
-            </div>
-
-            <p class="text-slate-700 dark:text-slate-300 font-medium mb-2 text-sm">${description}</p>
-            ${detailedDesc ? `<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed">${detailedDesc}</p>` : ''}
-
-            <div class="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-700">
-              ${wikiUrl ? `<a href="${wikiUrl}" target="_blank" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Read More</a>` : '<span></span>'}
-              
-              <button onclick="viewRawJson(${index})" class="text-xs font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors flex items-center gap-1">
-                <i class="fa-solid fa-code"></i> JSON
-              </button>
-            </div>
-          </div>
-        `;
+        const card = createResultCard({
+          imageUrl,
+          name,
+          id,
+          score,
+          typeArray,
+          description,
+          detailedDesc,
+          officialUrl,
+          sourceUrl,
+          sourceLicenseUrl,
+          imageLicenseUrl,
+          index
+        });
         container.appendChild(card);
       });
       
@@ -607,10 +574,13 @@
         ? 'bg-red-500 text-white shadow-red-500/30' 
         : 'bg-slate-800 dark:bg-white text-white dark:text-slate-900 shadow-xl';
       
-      const icon = type === 'error' ? '<i class="fa-solid fa-circle-exclamation"></i>' : '<i class="fa-solid fa-circle-info"></i>';
+      const icon = document.createElement('i');
+      icon.className = type === 'error' ? 'fa-solid fa-circle-exclamation' : 'fa-solid fa-circle-info';
+      const text = document.createElement('span');
+      text.textContent = String(message);
 
       toast.className = `${colors} px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 text-sm font-medium transform transition-all duration-300 translate-y-10 opacity-0 pointer-events-auto min-w-[300px]`;
-      toast.innerHTML = `${icon} <span>${message}</span>`;
+      toast.append(icon, text);
       
       container.appendChild(toast);
       
@@ -636,6 +606,249 @@
         }
         return '<span class="' + cls + '">' + match + '</span>';
       });
+    }
+
+    function getSearchHistory() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+        if (!Array.isArray(parsed)) throw new Error('Search history is not an array');
+
+        return parsed
+          .filter(item => typeof item === 'string')
+          .map(item => item.trim())
+          .filter(Boolean)
+          .slice(0, 8);
+      } catch {
+        safeRemoveStorageItem(SEARCH_HISTORY_KEY);
+        return [];
+      }
+    }
+
+    function saveSearchHistory(history) {
+      try {
+        localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+      } catch {
+        // Ignore storage failures; recent searches are a convenience only.
+      }
+    }
+
+    function safeRemoveStorageItem(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch {
+        // Ignore storage failures; the app can run without this cleanup.
+      }
+    }
+
+    function asDisplayText(value, fallback) {
+      if (typeof value === 'string' && value.trim()) return value;
+      if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+      if (Array.isArray(value)) {
+        const values = value.map(item => asDisplayText(item, '')).filter(Boolean);
+        return [...new Set(values)].join(' / ') || fallback;
+      }
+      if (value && typeof value === 'object' && typeof value['@value'] === 'string') {
+        return value['@value'];
+      }
+      return fallback;
+    }
+
+    function splitFilterValues(value, normalize = item => item) {
+      if (typeof value !== 'string') return [];
+      return value
+        .split(',')
+        .map(item => item.trim())
+        .map(normalize)
+        .filter(Boolean);
+    }
+
+    function normalizeLanguageFilter(value) {
+      return value.toLowerCase();
+    }
+
+    function normalizeTypeFilter(value) {
+      const aliasKey = value.replace(/[^a-z0-9]/gi, '').toLowerCase();
+      if (KG_TYPE_ALIASES[aliasKey]) return KG_TYPE_ALIASES[aliasKey];
+      return value
+        .split(/[\s_-]+/)
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+        .join('');
+    }
+
+    function getSafeHttpsUrl(value) {
+      if (typeof value !== 'string' || !value.trim()) return '';
+      try {
+        const url = new URL(value, window.location.href);
+        return url.protocol === 'https:' ? url.href : '';
+      } catch {
+        return '';
+      }
+    }
+
+    function createIcon(className) {
+      const icon = document.createElement('i');
+      icon.className = className;
+      return icon;
+    }
+
+    function createEmptyState(message) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'text-center py-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700';
+      const text = document.createElement('p');
+      text.className = 'text-slate-500';
+      text.textContent = message;
+      wrapper.appendChild(text);
+      return wrapper;
+    }
+
+    function renderError(message) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'text-center py-12 bg-red-50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/30';
+      const icon = createIcon('fa-solid fa-triangle-exclamation text-3xl text-red-500 mb-3');
+      const title = document.createElement('p');
+      title.className = 'text-red-600 dark:text-red-400 font-medium';
+      title.textContent = 'Search Failed';
+      const detail = document.createElement('p');
+      detail.className = 'text-red-400 dark:text-red-500/70 text-sm mt-1';
+      detail.textContent = message;
+      wrapper.append(icon, title, detail);
+      document.getElementById('resultsContainer').replaceChildren(wrapper);
+    }
+
+    function createImageFallback() {
+      const fallback = document.createElement('div');
+      fallback.className = 'w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600';
+      fallback.appendChild(createIcon('fa-regular fa-image text-2xl'));
+      return fallback;
+    }
+
+    function createImageSection(imageUrl, imageAlt) {
+      const section = document.createElement('div');
+      section.className = 'w-full md:w-48 h-48 md:h-auto bg-slate-100 dark:bg-slate-900 relative overflow-hidden flex-shrink-0';
+      const image = document.createElement('img');
+      image.src = imageUrl;
+      image.alt = imageAlt ? `${imageAlt} thumbnail` : '';
+      image.loading = 'lazy';
+      image.className = 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-110';
+      image.addEventListener('error', () => section.replaceChildren(createImageFallback()));
+      section.appendChild(image);
+      return section;
+    }
+
+    function createExternalLink(url, label, iconClass, className) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = className;
+      link.append(createIcon(iconClass), document.createTextNode(` ${label}`));
+      return link;
+    }
+
+    function createResultCard({
+      imageUrl,
+      name,
+      id,
+      score,
+      typeArray,
+      description,
+      detailedDesc,
+      officialUrl,
+      sourceUrl,
+      sourceLicenseUrl,
+      imageLicenseUrl,
+      index
+    }) {
+      const card = document.createElement('div');
+      card.className = 'bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg dark:hover:shadow-slate-900/50 transition-all duration-300 animate-fade-in-up flex flex-col md:flex-row group';
+      card.style.animationDelay = `${index * 50}ms`;
+      if (imageUrl) card.appendChild(createImageSection(imageUrl, name));
+
+      const content = document.createElement('div');
+      content.className = 'flex-1 p-5 flex flex-col relative';
+
+      const header = document.createElement('div');
+      header.className = 'flex justify-between items-start';
+      const titleBlock = document.createElement('div');
+      const title = document.createElement('h2');
+      title.className = 'text-xl font-bold text-slate-800 dark:text-slate-100 mb-1 leading-tight';
+      title.textContent = name;
+      titleBlock.appendChild(title);
+
+      if (id) {
+        const idButton = document.createElement('button');
+        idButton.className = 'text-xs font-mono text-slate-400 dark:text-slate-500 hover:text-blue-500 dark:hover:text-blue-400 transition-colors mb-2 block text-left';
+        idButton.title = 'Click to search ID';
+        idButton.append(createIcon('fa-solid fa-fingerprint mr-1'), document.createTextNode(id));
+        idButton.addEventListener('click', () => triggerSearch(id));
+        titleBlock.appendChild(idButton);
+      }
+
+      const scoreBadge = document.createElement('div');
+      scoreBadge.className = 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 text-xs font-bold px-2 py-1 rounded flex items-center gap-1';
+      scoreBadge.title = 'Relevance Score';
+      scoreBadge.append(createIcon('fa-solid fa-star text-amber-400 text-[10px]'), document.createTextNode(` ${score}`));
+      header.append(titleBlock, scoreBadge);
+
+      const tags = document.createElement('div');
+      tags.className = 'flex flex-wrap gap-2 mb-3';
+      typeArray.map(type => asDisplayText(type, '')).filter(Boolean).forEach(type => {
+        const button = document.createElement('button');
+        button.className = 'text-[10px] uppercase font-bold tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded border border-blue-100 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors';
+        button.textContent = type;
+        button.addEventListener('click', () => triggerSearch(type));
+        tags.appendChild(button);
+      });
+
+      const descriptionText = document.createElement('p');
+      descriptionText.className = 'text-slate-700 dark:text-slate-300 font-medium mb-2 text-sm';
+      descriptionText.textContent = description;
+
+      content.append(header, tags, descriptionText);
+
+      if (detailedDesc) {
+        const detail = document.createElement('p');
+        detail.className = 'text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed';
+        detail.textContent = detailedDesc;
+        content.appendChild(detail);
+      }
+
+      if (sourceLicenseUrl || imageLicenseUrl) {
+        const attribution = document.createElement('div');
+        attribution.className = 'flex flex-wrap gap-3 mb-4 text-xs';
+        const licenseClass = 'font-medium text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors flex items-center gap-1';
+        if (sourceLicenseUrl) {
+          attribution.appendChild(createExternalLink(sourceLicenseUrl, 'Source license', 'fa-solid fa-certificate', licenseClass));
+        }
+        if (imageLicenseUrl) {
+          attribution.appendChild(createExternalLink(imageLicenseUrl, 'Image license', 'fa-regular fa-image', licenseClass));
+        }
+        content.appendChild(attribution);
+      }
+
+      const footer = document.createElement('div');
+      footer.className = 'mt-auto pt-4 flex items-center justify-between gap-4 border-t border-slate-100 dark:border-slate-700';
+      const actionLinks = document.createElement('div');
+      actionLinks.className = 'flex flex-wrap gap-x-4 gap-y-2';
+      const actionClass = 'text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1';
+
+      if (officialUrl) {
+        actionLinks.appendChild(createExternalLink(officialUrl, 'Official site', 'fa-solid fa-globe', actionClass));
+      }
+      if (sourceUrl) {
+        actionLinks.appendChild(createExternalLink(sourceUrl, 'Source', 'fa-solid fa-arrow-up-right-from-square', actionClass));
+      }
+      footer.appendChild(actionLinks);
+
+      const jsonButton = document.createElement('button');
+      jsonButton.className = 'text-xs font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors flex items-center gap-1';
+      jsonButton.append(createIcon('fa-solid fa-code'), document.createTextNode(' JSON'));
+      jsonButton.addEventListener('click', () => viewRawJson(index));
+      footer.appendChild(jsonButton);
+      content.appendChild(footer);
+      card.appendChild(content);
+      return card;
     }
 
     // Modal Close Events
