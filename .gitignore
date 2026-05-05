@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+
+# Disposable local automation artifacts.
+.playwright-cli/
+.playwright-browsers/
